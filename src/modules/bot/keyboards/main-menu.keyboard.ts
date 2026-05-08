@@ -7,7 +7,7 @@ export const mainMenuKeyboard = (user: User) => {
   const buttons = [
     Markup.button.callback('📚 Courses', BotActionEnum.MENU_COURSES),
     Markup.button.callback('📝 Lectures', BotActionEnum.MENU_LECTURES),
-    Markup.button.callback('🎬 Videos', BotActionEnum.MENU_VIDEOS),
+    // Markup.button.callback('🎬 Videos', BotActionEnum.MENU_VIDEOS),
     Markup.button.callback('📜 Offer', BotActionEnum.MENU_OFFER),
   ];
 

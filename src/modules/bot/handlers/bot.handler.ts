@@ -1,13 +1,19 @@
+import { OFFER_TEXT_MOCK } from '@bot/constants/offer-text-mock';
+import { lecturesKeyboard } from '@bot/keyboards/lectures.keyboard';
+import { CoursesService } from '@courses/courses.service';
+import { LecturesService } from '@lectures/lectures.service';
 import { Action, Ctx, Start, Update } from 'nestjs-telegraf';
-import { CoursesService } from 'src/courses/courses.service';
 import { Context } from 'telegraf';
-import { BotActionEnum } from './enums/bot-action.enum';
-import { coursesKeyboard } from './keyboards/courses.keyboard';
-import { mainMenuKeyboard } from './keyboards/main-menu.keyboard';
+import { BotActionEnum } from '../enums/bot-action.enum';
+import { coursesKeyboard } from '../keyboards/courses.keyboard';
+import { mainMenuKeyboard } from '../keyboards/main-menu.keyboard';
 
 @Update()
-export class BotUpdate {
-  constructor(private readonly coursesService: CoursesService) {}
+export class BotHandler {
+  constructor(
+    private readonly coursesService: CoursesService,
+    private readonly lecturesService: LecturesService,
+  ) {}
 
   @Start()
   async start(@Ctx() ctx: Context) {
@@ -28,7 +34,8 @@ export class BotUpdate {
 
   @Action(BotActionEnum.MENU_LECTURES)
   async lectures(@Ctx() ctx: Context) {
-    await ctx.reply('Lectures list');
+    const lectures = await this.lecturesService.getAvailableLectures();
+    await ctx.reply('Choose the desired lecture to learn details', lecturesKeyboard(lectures));
   }
 
   @Action(BotActionEnum.MENU_VIDEOS)
@@ -38,6 +45,6 @@ export class BotUpdate {
 
   @Action(BotActionEnum.MENU_OFFER)
   async showOffer(@Ctx() ctx: Context) {
-    await ctx.reply('The text of the offer');
+    await ctx.reply(OFFER_TEXT_MOCK);
   }
 }
