@@ -1,20 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { lecturesMockDatabase, mockDbLecture } from './mock/lectures-mock.database';
+import { LectureSequelizeModel } from './infrastructure/sequelize/lecture.sequelize.model';
+import { LectureSequelizeRepository } from './infrastructure/sequelize/lecture.sequelize.repository';
 
 @Injectable()
 export class LecturesService {
-  private readonly db: mockDbLecture[];
+  constructor(private readonly lectureRepository: LectureSequelizeRepository) {}
 
-  constructor() {
-    this.db = lecturesMockDatabase;
+  async getAvailableLectures(): Promise<LectureSequelizeModel[]> {
+    return this.lectureRepository.getAvailableLectures();
   }
 
-  async getAvailableLectures(): Promise<mockDbLecture[]> {
-    return Promise.resolve(this.db.filter((lecture) => lecture.deletedAt === null));
-  }
-
-  async getById(id: string): Promise<mockDbLecture | null> {
-    const lectures = this.db;
-    return Promise.resolve(lectures.find((lecture: mockDbLecture) => lecture.id === id) ?? null);
+  async getById(id: string): Promise<LectureSequelizeModel | null> {
+    return this.lectureRepository.getById(id);
   }
 }

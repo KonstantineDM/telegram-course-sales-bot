@@ -12,7 +12,7 @@ export class LecturesHandler {
     @Inject('PAYMENT_PROVIDER') private readonly paymentProvider: MockPaymentProviderInterface,
   ) {}
 
-  @Action(/^LECTURE_(\d+)$/)
+  @Action(/^LECTURE_(.+)$/)
   async lectureDetails(
     @Ctx()
     ctx: Context & {
@@ -36,7 +36,7 @@ export class LecturesHandler {
     await ctx.reply(reply, payButton);
   }
 
-  @Action(/^PAY_LECTURE_(\d+)$/)
+  @Action(/^PAY_LECTURE_(.+)$/)
   async payLecture(
     @Ctx()
     ctx: Context & {

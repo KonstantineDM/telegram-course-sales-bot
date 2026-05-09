@@ -25,7 +25,8 @@
       "@bot/*": ["./src/modules/bot/*"],
       "@courses/*": ["./src/modules/courses/*"],
       "@lectures/*": ["./src/modules/lectures/*"],
-      "@integrations/*": ["./src/modules/integrations/*"]
+      "@integrations/*": ["./src/modules/integrations/*"],
+      "@shared/*": ["./src/modules/shared/*"]
     }
   }
 }
